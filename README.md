@@ -10,6 +10,10 @@ Notes:
 User will need to enter in relevant information, such as MySQL database connection values and certificate and key file names. 
 User will need to make appropriate adjustments to the HTTP connections if a PEP is not being used.
 
+
+To run clients (pubClient.py, subClient.py, and subServer.py) from command line:
+python <fileName.py> (e.g. python pubClient.py)
+
 LICENSE
 
 GPLv3

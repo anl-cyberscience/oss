@@ -4,7 +4,7 @@ DB_PASSWORD = '' # MySQL password
 DB_DB = '' # MySQL database schema name
 DB_PORT = 3306 # MySQL port
 
-LAYER7_URL = 'https://lonzo.bcmcgroup.com:8443/cybershare/taxii' # PEP URL
+LAYER7_URL = 'https://layer7urlGoesHere:portGoesHere/endpoint/goes/here' # PEP URL
 KEY = 'publisher.key' # User private key (PEM file)
 CERT = 'publisher.crt' # User certificate (PEM file)
 

@@ -1,4 +1,4 @@
-subServer.py and subClient.py README
+## subServer.py and subClient.py README
 
 System Requirements: python 2.7, httplib2 package, MySQLdb package
 
@@ -6,18 +6,18 @@ This file is designed to be used with a hub-spoke model TAXII messaging hub.
 It provides users with access to the operations that a subscriber would need in this messaging paradigm through a comand line interface. 
 Users should edit the associated config.py file in this directory prior to running subServer.py or subClient.py. 
 
-* Subscriber Listening Server  
+#### Subscriber Listening Server (subServer.py)
 Once properly configured, just navigate to this directory in the command line and execute the following:
 
-$ python subServer.py <LISTENING_PORT>
+*$ python subServer.py LISTENING_PORT*
 
 The server will start up and give a notification that is running.  Use CTRL-C to kill it.
 
 
-* Subscriber Client
+#### Subscriber Client
 Once properly configured, just navigate to this directory in the command line and execute the following:
 
-$ python subClient.py <CALLBACK_URL>
+*$ python subClient.py CALLBACK_URL*
 
 The client should display a prompt with 10 options:
 

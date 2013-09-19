@@ -8,7 +8,7 @@ import os
 import config
 
 if len(sys.argv) != 2:
-    print 'Usage: {0} <Callback URL>'.format(sys.argv[0])
+    print 'Usage: {0} <CALLBACK_URL>'.format(sys.argv[0])
     sys.exit(1)
 else:
     CALLBACK = sys.argv[1]

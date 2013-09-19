@@ -4,10 +4,13 @@ from ssl import wrap_socket, CERT_REQUIRED
 import config
 
 if len(sys.argv) != 2:
-    print 'Usage: {0} <Callback URL>'.format(sys.argv[0])
+    print 'Usage: {0} <LISTENING_PORT>'.format(sys.argv[0])
     sys.exit(1)
 else:
-    CALLBACK = sys.argv[1]
+    try: CALLBACK = int(sys.argv[1])
+    except ValueError:
+        print 'Callback Port must be an integer'
+        sys.exit(1)
 
 # This class will handle any incoming request from the browser 
 class myHandler(BaseHTTPRequestHandler):
@@ -27,10 +30,10 @@ class myHandler(BaseHTTPRequestHandler):
         return
 
 try:
-    server = HTTPServer(('', callbackPort), myHandler)
+    server = HTTPServer(('', CALLBACK), myHandler)
     server.socket = wrap_socket(server.socket, keyfile=config.KEY, certfile=config.CERT, server_side=True, cert_reqs=CERT_REQUIRED, ca_certs=config.CACERTS)
-    print 'Started subscriber at {0}\n'.format(CALLBACK)
+    print 'Started subscriber on port {0}\n'.format(CALLBACK)
     server.serve_forever()
 except KeyboardInterrupt:
-    print ' CTRL-C received, shutting down subscriber at {0}'.format(CALLBACK)
+    print ' CTRL-C received, shutting down subscriber on port {0}'.format(CALLBACK)
     server.socket.close()

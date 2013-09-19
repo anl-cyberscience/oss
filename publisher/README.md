@@ -1,4 +1,4 @@
-pubClient.py README
+## pubClient.py README
 
 System Requirements:  python 2.7, httplib2 package, MySQLdb package
 
@@ -7,7 +7,7 @@ It provides users with access to the operations that a publisher would need in t
 Users should edit the associated config.py file in this directory prior to running pubClient.py.
 Once properly configured, just navigate to this directory in the command line and execute the following:
 
-$ python pubClient.py
+*$ python pubClient.py*
 
 The client should display a prompt with three options:  
 

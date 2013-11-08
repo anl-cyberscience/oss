@@ -1,3 +1,6 @@
+#author - Mark Walters (mwalters@bcmcgroup.com)
+
+
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import sys
 from ssl import wrap_socket, CERT_REQUIRED

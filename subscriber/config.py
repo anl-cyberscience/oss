@@ -1,3 +1,6 @@
+#author - Mark Walters (mwalters@bcmcgroup.com)
+
+
 DB_HOST = '127.0.0.1' # MySQL host
 DB_USER = '' # MySQL user
 DB_PASSWORD = '' # MySQL password

@@ -1,0 +1,33 @@
+# These should be left alone
+publisherXTaxiiAccept=urn\:taxii.mitre.org\:message\:xml\:1.0
+subscriberXTaxiiServices=urn\:taxii.mitre.org\:services\:1.0
+publisherXTaxiiContentType=urn\:taxii.mitre.org\:message\:xml\:1.0
+publisherContentType=application/xml
+subscriberContentType=application/xml
+subscriberAccept=application/xml
+publisherAccept=application/xml
+publisherXTaxiiServices=urn\:taxii.mitre.org\:services\:1.0
+subscriberXTaxiiContentType=urn\:taxii.mitre.org\:message\:xml\:1.0
+subscriberXTaxiiProtocol=urn\:taxii.mitre.org\:protocol\:https\:1.0
+subscriberXTaxiiAccept=urn\:taxii.mitre.org\:message\:xml\:1.0
+publisherXTaxiiProtocol=urn\:taxii.mitre.org\:protocol\:https\:1.0
+stix_cB=urn\:stix.mitre.org\:xml\:1.1
+clientVersion=1.0
+
+# Edit these if you plan to use your own keystores
+pathToPublisherKeyStore=lib/FlareClientPublisher.jks
+pathToSubscriberKeyStore=lib/FlareClientSubscriber.jks
+pathToTrustStore=lib/FlareClientTrustStore.jks
+publisherKeyStorePassword=hashedPasswordGoesHere
+subscriberKeyStorePassword=hashedPasswordGoesHere
+trustStorePassword=hashedPasswordGoesHere
+
+# These can be edited if desired
+subscriberUserAgent=flare client subscriber application
+publisherUserAgent=flare client publisher application
+listenerEndpoint=/
+
+# These need to be edited
+basePath=/root/FlareClient-1.0/
+remoteTaxiiIP=123.123.123.123
+layer7Url=https\://FlareGateway\:8443/flare/taxii/

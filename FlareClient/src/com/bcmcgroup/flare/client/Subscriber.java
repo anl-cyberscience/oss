@@ -67,11 +67,17 @@ import org.apache.log4j.Logger;
 public class Subscriber {
 	private static final Logger logger = Logger.getLogger(Subscriber.class);
 	private Properties config = null;
-	
+
+	/**
+	 * Sets config.properties for this instance.
+	 */
 	public void setProperties(Properties config) {
 		this.config = config;
 	}
 	
+	/**
+	 * Load config.properties into memory space
+	 */
 	public void loadProperties() {
 		InputStream inputStream = null;
 		config = new Properties();
@@ -93,8 +99,8 @@ public class Subscriber {
 	}
 	
 	/**
-	 * Strips off the TAXII portion from the supplied Document and then
-	 * saves the content as an XML File to the appropriate feed destination.
+	 * Strips off the TAXII portion from the supplied TAXII Inbox_Message Document 
+	 * and then saves the content as an XML File to the appropriate feed destination.
 	 * 
 	 * @param taxiiDoc a TAXII 1.0 compliant Document object
 	 */
@@ -194,8 +200,8 @@ public class Subscriber {
 	}	
 	
 	/**
-	 * Strips off the TAXII portion from the supplied File and then
-	 * saves the content as an XML File to the appropriate feed destination.
+	 * Strips off the TAXII portion from the supplied TAXII Inbox_Message File 
+	 * and then saves the content as an XML File to the appropriate feed destination.
 	 * 
 	 * @param taxiiMessage a TAXII 1.0 compliant XML file
 	 * @throws ParserConfigurationException 
@@ -219,8 +225,8 @@ public class Subscriber {
 	}
 
 	/**
-	 * Strips off the TAXII portion from the supplied String and then
-	 * saves the content as an XML File to the appropriate feed destination.
+	 * Strips off the TAXII portion from the supplied TAXII Inbox_Message String 
+	 * and then saves the content as an XML File to the appropriate feed destination.
 	 * 
 	 * @param taxiiMessage a String containing TAXII 1.0 compliant XML
 	 * @throws ParserConfigurationException 

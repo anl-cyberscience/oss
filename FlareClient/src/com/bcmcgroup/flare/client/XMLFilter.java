@@ -37,6 +37,11 @@ public class XMLFilter {
 	 */
 	public XMLFilter() {}	
 		
+	/**
+	 * Filters out the non-UTF-8 characters
+	 * @param xmlStream the xml stream to be filtered
+	 * @return the filtered resulting String
+	 */
     public String filter(InputStream xmlStream) {
 		try {
 			CharsetDecoder utf8Decoder = Charset.forName("UTF-8").newDecoder();

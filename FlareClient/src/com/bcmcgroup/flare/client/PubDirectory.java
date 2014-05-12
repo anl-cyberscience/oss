@@ -126,6 +126,9 @@ public class PubDirectory {
         this.initial = false;
     }
 
+    /**
+     * Load config.properties
+     */
     private static void loadProperties() {
     	InputStream inputStream = null;
     	if (config == null) {

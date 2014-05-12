@@ -84,6 +84,11 @@ public class FlareClientUtil {
     private static int pswdIterations = 65536;
     private static int keySize = 256;
      
+    /**
+     * Encrypt a plaintext password in AES 
+     * @param plainText the String text to be encrypted in AES
+     * @return the encrypted text String
+     */
     public static String encrypt(String plainText) {  
     	try {
 	        byte[] saltBytes = salt.getBytes("UTF-8");              
@@ -115,6 +120,11 @@ public class FlareClientUtil {
     	return null;    
     }
      
+    /**
+     * Decrypt a previously encrypted password to plaintext
+     * @param encryptedText the text String to be decrypted
+     * @return the decrypted String
+     */
     public static String decrypt(String encryptedText) {
     	try {
     		byte[] saltBytes = salt.getBytes("UTF-8");
@@ -151,7 +161,13 @@ public class FlareClientUtil {
 		}
 		return null;
     }
+    
        
+    /**
+     * Convert a stacktrace from an exception into a String object so it can be logged into a log file
+     * @param e the exception occurred
+     * @return the stack trace as a String
+     */
     public static String getStackTrace(Exception e) {
 		 StringWriter sw = new StringWriter();
 		 e.printStackTrace(new PrintWriter(sw));
@@ -159,6 +175,11 @@ public class FlareClientUtil {
 		 return stacktrace;
 	}
     
+    /**
+     * Evaluate a byte array to check its validity
+     * @param input the byte array to be evaluated
+     * @return true or false: valid or not valid
+     */
     public static boolean isValidUTF8(byte[] input) {
         CharsetDecoder cs = Charset.forName("UTF-8").newDecoder();
         try {
@@ -169,6 +190,12 @@ public class FlareClientUtil {
         }       
     }
     
+    /**
+     * Validate a content string based on defined taxii and stix schema files
+     * @param content the content String to be validated
+     * @return a list of validation errors if there are errors, otherwise it is empty
+     * @throws SAXException
+     */
     public static List<SchemaError> validateTaxii(String content) throws SAXException {
     	try {   		    		
     		logger.debug("Calling validateTaxii on content: " + content);
@@ -186,6 +213,11 @@ public class FlareClientUtil {
         }
     }     
     
+    /**
+     * Convert an input stream to a String
+     * @param is the input stream to be converted into String
+     * @return the converted string result 
+     */
     public static String convertStreamToString(InputStream is) {
 		logger.info("convertStreamToString is == " + is);
 	        /*
@@ -218,6 +250,11 @@ public class FlareClientUtil {
 	        }
 	    }
     
+    /**
+     * Convert a Document into a String
+     * @param node the Document to be converted to String
+     * @return the String converted from node
+     */
     public static String convertDocumentToString(Node node) {
 		 try {
 			 Source source = new DOMSource(node);
@@ -234,6 +271,11 @@ public class FlareClientUtil {
 		 return null;
     }
     
+    /**
+     * Convert a Document into a byte array
+     * @param node the document to be converted to bytes
+     * @return the byte array converted from the node
+     */
     public static byte[] convertDocumentToBytes(Node node) {
     	try {
     		Source source = new DOMSource(node);
@@ -250,6 +292,11 @@ public class FlareClientUtil {
 		return null;
 	}
     
+    /**
+     * Save the value of a property for a specific property name
+     * @param propName the property name with its value to be set in the config.properties
+     * @param value the value to be set in the config.properties
+     */
     public static void changeProperty(String propName, String value) {
         Properties props = new Properties();
         InputStream is = null;
@@ -277,6 +324,11 @@ public class FlareClientUtil {
         }
     }
     
+    /**
+     * Convert xml String into a document
+     * @param xml the xml string to be converted to document
+     * @return the document converted from the xml string
+     */
     public static Document convertStringToDocument(String xml) {
 		 try{
 			 logger.info("convertStringToDocument xml == " + xml);
@@ -293,6 +345,11 @@ public class FlareClientUtil {
 		 return null;
 	 }
 
+    /**
+     * the main method to run for encryption of plaintext password, the result value will be 
+     * saved into config.property file for the value field of the passed in property name
+     * @param args: property name, password to be encrypted
+     */
 	public static void main(String[] args) {
 		String originalPassword  = null;
 		try {

@@ -17,9 +17,9 @@ clientVersion=1.0
 # Edit these if you plan to use your own keystores
 pathToPublisherKeyStore=lib/FlareClientPublisher.jks
 pathToSubscriberKeyStore=lib/FlareClientSubscriber.jks
-pathToTrustStore=lib/FlareClientTrustStore.jks
 publisherKeyStorePassword=hashedPasswordGoesHere
 subscriberKeyStorePassword=hashedPasswordGoesHere
+pathToTrustStore=lib/FlareClientTrustStore.jks
 trustStorePassword=hashedPasswordGoesHere
 
 # These can be edited if desired

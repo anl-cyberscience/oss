@@ -21,7 +21,8 @@ stix_cB=urn\:stix.mitre.org\:xml\:1.1
 
 # subscriber
 pathToSubscriberKeyStore=lib/FlareClientSubscriber.jks
-pathToPublishersPublicKeys=lib/FLAREdsValidation.jks
+pathToDsValidationKeyStore=lib/publishersPublicKeys
+dsValidationKeyStorePassword=hashedPasswordGoesHere
 subscriberKeyStorePassword=hashedPasswordGoesHere
 subscriberUserAgent=flare client subscriber application
 subscriberContentType=application/xml

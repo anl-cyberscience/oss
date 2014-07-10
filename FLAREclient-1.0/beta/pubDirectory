@@ -1,0 +1,42 @@
+#!/bin/bash
+
+FLARECLIENT_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# if no args specified, show usage
+if [ $# = 0 ]; then
+    echo "Usage: pubDirectory [-r] DIRECTORY"
+    exit 1
+fi
+
+# get arguments
+DIRECTORY=$1
+shift
+if [ "$DIRECTORY" = "-r" ]; then
+    RECURSIVE="-r"
+    DIRECTORY=$1
+fi
+
+if [ ! -d "$DIRECTORY" ]; then
+    echo "$DIRECTORY is not a directory!"
+    exit 1
+fi
+
+# some Java parameters
+if [ "$JAVA_HOME" != "" ]; then
+    JAVA_HOME=$JAVA_HOME
+fi
+
+if [ "$JAVA_HOME" = "" ]; then
+    echo "Error: JAVA_HOME is not set."
+    exit 1
+fi
+
+JAVA=$JAVA_HOME/bin/java
+CLASSPATH="$FLARECLIENT_HOME/lib/flare-client-1.1.jar:$FLARECLIENT_HOME/lib/log4j-1.2.14.jar:$FLARECLIENT_HOME/lib/commons-io-2.4.jar:$FLARECLIENT_HOME/lib/commons-codec-1.9.jar:$FLARECLIENT_HOME:$FLARECLIENT_HOME/lib/STIX_Validator.jar"
+CLASS=com.bcmcgroup.flare.client.PubDirectory
+
+if [ "$RECURSIVE" = "-r" ]; then
+    exec "$JAVA" -classpath "$CLASSPATH" $CLASS -r "$DIRECTORY"
+else
+    exec "$JAVA" -classpath "$CLASSPATH" $CLASS "$DIRECTORY"
+fi

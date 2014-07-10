@@ -1,0 +1,43 @@
+#!/bin/bash
+
+FLARECLIENT_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+USAGE="Usage: httpsListener [-p PORT]"
+
+# if not 0 or 2 args, print usage
+if [ $# -eq 0 ]; then
+    PORT=8000
+elif [ $# -eq 1 -o $# -ge 3 ]; then
+    echo "$USAGE"
+    exit 1
+elif [ $# -eq 2 ]; then
+    OPTION=$1
+    shift
+    if [ $OPTION != "-p" ]; then
+        echo "$USAGE"
+        exit 1
+    fi
+    PORT=$1
+    if [[ $PORT = *[!0-9]* ]]; then
+        echo "Port must be an integer 0-65535"
+        exit 1
+    elif [ $PORT -lt 0 -o $PORT -gt 65535 ]; then
+        echo "Port must be an integer 0-65535"
+        exit 1
+    fi
+fi
+
+# some Java parameters
+if [ "$JAVA_HOME" != "" ]; then
+    JAVA_HOME=$JAVA_HOME
+fi
+
+if [ "$JAVA_HOME" = "" ]; then
+    echo "Error: JAVA_HOME is not set."
+    exit 1
+fi
+
+JAVA=$JAVA_HOME/bin/java
+CLASSPATH="$FLARECLIENT_HOME/lib/flare-client-1.1.jar:$FLARECLIENT_HOME/lib/log4j-1.2.14.jar:$FLARECLIENT_HOME/lib/commons-io-2.4.jar:$FLARECLIENT_HOME/lib/commons-codec-1.9.jar:$FLARECLIENT_HOME:$FLARECLIENT_HOME/lib/STIX_Validator.jar"
+CLASS=com.bcmcgroup.flare.client.HttpsListener
+
+exec "$JAVA" -cp "$CLASSPATH" $CLASS -p $PORT

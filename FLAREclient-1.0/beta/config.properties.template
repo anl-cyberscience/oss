@@ -1,0 +1,34 @@
+# general
+clientVersion=1.1
+layer7Url=https\://FlareGateway\:8443/flare/taxii/
+pathToTrustStore=lib/FlareClientTrustStore.jks
+trustStorePassword=hashedPasswordGoesHere
+basePath=/home/flareClient/FlareClient-1.1/
+
+# publisher
+pathToPublisherKeyStore=lib/FlareClientPublisher.jks
+publisherKeyStorePassword=hashedPasswordGoesHere
+publisherKeyName=publisher
+publisherKeyPassword=hashedPasswordGoesHere
+publisherUserAgent=flare client publisher application
+publisherContentType=application/xml
+publisherAccept=application/xml
+publisherXTaxiiAccept=urn\:taxii.mitre.org\:message\:xml\:1.0
+publisherXTaxiiContentType=urn\:taxii.mitre.org\:message\:xml\:1.0
+publisherXTaxiiProtocol=urn\:taxii.mitre.org\:protocol\:https\:1.0
+publisherXTaxiiServices=urn\:taxii.mitre.org\:services\:1.0
+stix_cB=urn\:stix.mitre.org\:xml\:1.1
+
+# subscriber
+pathToSubscriberKeyStore=lib/FlareClientSubscriber.jks
+pathToPublishersPublicKeys=lib/publishersPublicKeys
+subscriberKeyStorePassword=hashedPasswordGoesHere
+subscriberUserAgent=flare client subscriber application
+subscriberContentType=application/xml
+subscriberAccept=application/xml
+subscriberXTaxiiAccept=urn\:taxii.mitre.org\:message\:xml\:1.0
+subscriberXTaxiiContentType=urn\:taxii.mitre.org\:message\:xml\:1.0
+subscriberXTaxiiProtocol=urn\:taxii.mitre.org\:protocol\:https\:1.0
+subscriberXTaxiiServices=urn\:taxii.mitre.org\:services\:1.0
+listenerEndpoint=/
+remoteTaxiiIP=123.123.123.123

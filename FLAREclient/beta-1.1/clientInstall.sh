@@ -2,6 +2,7 @@
 
 # update all OS packages
 yum update
+yum install aide
 
 # create linux user for FLAREclient
 echo ""
@@ -48,9 +49,9 @@ echo "Overriding control-alt-delete..."
 echo -e "start on control-alt-delete\n\nexec /usr/bin/logger -p security.info \"Control-Alt-Delete pressed\"" > /etc/init/control-alt-delete.override
 
 # add "monitored" email address to /etc/aliases
-echo ""
-echo "Adding 'monitored' email address to /etc/aliases..."
-echo "root: dte-operations@cert.org" >> /etc/aliases
-newaliases
+#echo ""
+#echo "Adding 'monitored' email address to /etc/aliases..."
+#echo "root: monitoredEmail@example.com" >> /etc/aliases
+#newaliases
 
 echo "Done!"

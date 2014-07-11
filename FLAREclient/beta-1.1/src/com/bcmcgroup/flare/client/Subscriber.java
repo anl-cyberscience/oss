@@ -126,7 +126,7 @@ public class Subscriber {
 				savePath = savePath + fN + "/";
 				subId = srcSub.getAttribute("subscription_id");
 				try {
-					validateList = XmlDigitalSignatureVerifier.validateSignature(taxiiDoc, config.getProperty("pathToPublishersPublicKeys"), FlareClientUtil.decrypt(config.getProperty("subscriberKeyStorePassword")));
+					validateList = XmlDigitalSignatureVerifier.validateSignature(taxiiDoc, config.getProperty("pathToDsValidationKeyStore"), FlareClientUtil.decrypt(config.getProperty("dsValidationKeyStorePassword")));
 					logger.debug("save validateList: " + validateList);
 					Node node = null;
 					NodeList nlist = (NodeList) srcSub.getElementsByTagName("Inclusive_Begin_Timestamp");

@@ -58,7 +58,7 @@ public class ConfigClient
     		
     		// subscriber
     		config.setProperty("pathToSubscriberKeyStore", "/path/to/subscriberKeyStore.jks");
-    		config.setProperty("pathToPublishersPublicKeys", "/path/to/directory/containing/publishers/public/keys");
+    		config.setProperty("pathToDsValidationKeyStore", "/path/to/keystore/containing/publishers/public/keys");
     		config.setProperty("subscriberKeyStorePassword",  "hashedPasswordGoesHere");
     		config.setProperty("subscriberUserAgent", "flare client subscriber application");
     		config.setProperty("subscriberContentType", "application/xml");

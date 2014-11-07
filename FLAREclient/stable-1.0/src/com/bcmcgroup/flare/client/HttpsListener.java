@@ -129,6 +129,7 @@ public class HttpsListener {
 			String remoteAddress = t.getRemoteAddress().getAddress().toString();
 			logger.debug("handle remoteAddress: " + remoteAddress);
 			if (!remoteAddress.endsWith(config.getProperty("remoteTaxiiIP"))) {
+				logger.debug("remote address (" + remoteAddress + ") does not match with remoteTaxiiIP variable (" + config.getProperty("remoteTaxiiIP") + ")");
 				t.sendResponseHeaders(403, 0);
 				responseBody.write("Requests only accepted from authorized TAXII Servers!".getBytes());
 				responseBody.close();

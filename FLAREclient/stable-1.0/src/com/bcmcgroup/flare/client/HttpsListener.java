@@ -92,7 +92,8 @@ public class HttpsListener {
 		 * @throws IOException
 		 */
 		 public void handle(HttpExchange t) throws IOException {
-			
+			 logger.debug("Incoming message...");
+			 
 			// set response headers
 			Headers responseHeaders = t.getResponseHeaders();
 			responseHeaders.add("Accept", config.getProperty("subscriberAccept"));

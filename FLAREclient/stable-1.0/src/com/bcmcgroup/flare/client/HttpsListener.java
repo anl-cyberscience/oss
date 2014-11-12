@@ -266,6 +266,7 @@ public class HttpsListener {
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
+		logger.debug("HttpsListener started...");
 		int PORT = 8000;
 		if (args.length != 0) {
 			if ((args.length != 2) || (!args[0].equals("-p"))) {

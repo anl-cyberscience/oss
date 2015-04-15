@@ -621,6 +621,7 @@ public class ClientUtil {
 		Properties config = new Properties();
 		try {
 			inputStream = new FileInputStream("config.properties");
+			logger.info("loadProperties config.properties");
 			config.load(inputStream);
 		} catch (IOException e) {
 			 logger.error("loadProperties IOException  ioe: " + e.getMessage());

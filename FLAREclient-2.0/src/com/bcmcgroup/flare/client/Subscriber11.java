@@ -64,6 +64,7 @@ public class Subscriber11 {
 	 * @param fileName the file name to save the xml file as [defaults to current time stamp]
 	 */
 	void fetchStixAndSave(String filePrefix, Element root, String savePath, String fileName) {
+		File savefile = null;
 		try {
 			Date date = new Date();
 			NodeList contentBlocks = root.getElementsByTagName("Content_Block");
@@ -71,7 +72,7 @@ public class Subscriber11 {
 			String contentBinding;
 			Document contentDoc;
 			DocumentBuilder db = ClientUtil.generateDocumentBuilder();
-			logger.debug(filePrefix + " contentBlocks.getLength(): " + contentBlocks.getLength());
+			logger.info("saving "+filePrefix + " contentBlocks.getLength(): " + contentBlocks.getLength());
 			for (int i = 0; i < contentBlocks.getLength(); i++) {
 				// capture STIX document
 				contentBlock = (Element) contentBlocks.item(i);
@@ -92,14 +93,15 @@ public class Subscriber11 {
 				if (fileName == null) {
 					fileName = String.valueOf(date.getTime());
 				}
-				t.transform(new DOMSource(contentDoc), new StreamResult(new File(savePath + filePrefix + "_" + fileName + "_" + i + ".xml")));
+				savefile = new File(savePath + filePrefix + "_" + fileName + "_" + i + ".xml");
+				t.transform(new DOMSource(contentDoc), new StreamResult(savefile));
 			}
 		} catch (TransformerConfigurationException e) {
-			logger.error("fetchStixAndSave TransformerConfigurationException: " + e);
+			logger.error("fetchStixAndSave Error Saving file: "+ savefile + e);
 		} catch (TransformerFactoryConfigurationError e) {
-			logger.error("fetchStixAndSave TransformerFactoryConfigurationError: " + e);
+			logger.error("fetchStixAndSave Error Saving file: "+ savefile  + e);
 		} catch (TransformerException e) {
-			logger.error("poll TransformerException: " + e.getMessage());
+			logger.error("poll Error Saving file: "+ savefile + "\n" + e.getMessage());
 		}
 	}
 
@@ -114,15 +116,15 @@ public class Subscriber11 {
 		Node node = null;
 		String ts = "";
 		NodeList nlist = element.getElementsByTagName(tsType);
-		logger.debug(function + " nlist: " + nlist);
+		logger.trace(function + " nlist: " + nlist);
 		if (nlist != null) {
-			logger.debug(function + " " + tsType + " nlist.getLength(): " + nlist.getLength());
+			logger.trace(function + " " + tsType + " nlist.getLength(): " + nlist.getLength());
 		}
 		if (nlist != null && nlist.getLength() > 0) {
 		    node = (Node) nlist.item(0);
-		    logger.debug(function + " " + tsType + " node: " + node);
+		    logger.trace(function + " " + tsType + " node: " + node);
 			if (node != null) {
-				logger.debug(function + " " + tsType + " node: " + node);
+				logger.trace(function + " " + tsType + " node: " + node);
 			    ts = node.getNodeValue();
 			    if (ts == null) {
 			    	node = node.getFirstChild();
@@ -156,7 +158,7 @@ public class Subscriber11 {
 	 */
 	public String poll(String msgId, String cN, String subId, HashMap<String,String> extHdrs, String ebt, String iet, PollParameters pollParameters, String fileName) {
 		try {
-			logger.debug("poll msgId: " + msgId + " cN: " + cN + " subId: " + subId + " extHdrs: " + extHdrs + " ebt: " + ebt + " iet: " + iet + " fileName: " + fileName);
+			logger.info("poll msgId: " + msgId + " cN: " + cN + " subId: " + subId + " extHdrs: " + extHdrs + " ebt: " + ebt + " iet: " + iet + " fileName: " + fileName);
 			Properties config = ClientUtil.loadProperties();
 			
 			// set KeyStore and TrustStore properties
@@ -186,9 +188,9 @@ public class Subscriber11 {
 					String tsPw = ClientUtil.decrypt(config.getProperty("trustStorePassword"));
 					String hA = config.getProperty("hubAlias");
 					verifyStatus = XmlDigitalSignatureVerifier.verifySignatureEnveloped(responseDoc, ts, tsPw, hA);
-					logger.debug("poll inclusiveEndTimestamp validateStatus: " + verifyStatus);
+					logger.info("poll inclusiveEndTimestamp validateStatus: " + verifyStatus);
 				} else {
-					logger.debug("verifyDS is configured as false or not configured, so no validation of digital signature ... ");
+					logger.info("verifyDS is configured as false or not configured, so no validation of digital signature ... ");
 				}
 				
 				// when verify true or requires no verification, continue, otherwise discard 					
@@ -200,14 +202,14 @@ public class Subscriber11 {
 					// print debug statements, fetch STIX content and save
 					if (responseString != null) {
 						String savePath = config.getProperty("basePath") + "subscribeFeeds/" + cN + "/";
-						logger.debug("poll responseString length: " + responseString.length());
+						logger.info("poll responseString length: " + responseString.length());
 						logger.debug("poll responseString: " + responseString);
 						Element responseTaxiiRoot = responseDoc.getDocumentElement();
 						String responseIBT = getTimestampFromElement("poll", "Inclusive_Begin_Timestamp", responseTaxiiRoot);
 						String responseIET = getTimestampFromElement("poll", "Inclusive_End_Timestamp", responseTaxiiRoot);
 						String responseCN = responseTaxiiRoot.getAttribute("collection_name");
 						String responseSubId = responseTaxiiRoot.getAttribute("subscription_id");
-						logger.debug("poll responseCN: " + responseCN + ", responseSubId: " + responseSubId + ", responseIBT: " + responseIBT + ", responseIET: " + responseIET);
+						logger.info("poll responseCN: " + responseCN + ", responseSubId: " + responseSubId + ", responseIBT: " + responseIBT + ", responseIET: " + responseIET);
 						fetchStixAndSave("poll", responseTaxiiRoot, savePath, fileName);
 					}
 					return responseString;
@@ -241,7 +243,7 @@ public class Subscriber11 {
 	 */
 	public void save(Document taxiiDoc, String fileName) {
 		Properties config = ClientUtil.loadProperties();
-		logger.debug("save taxiiDoc: " + ClientUtil.convertDocumentToString(taxiiDoc, true));
+		logger.trace("save taxiiDoc: " + ClientUtil.convertDocumentToString(taxiiDoc, true));
 		Element taxiiRoot = taxiiDoc.getDocumentElement();
 		String ebt = "", iet = "";
 		Element srcSub = (Element) taxiiRoot.getElementsByTagName("Source_Subscription").item(0);

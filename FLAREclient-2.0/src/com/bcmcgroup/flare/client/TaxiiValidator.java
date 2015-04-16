@@ -29,6 +29,7 @@ public class TaxiiValidator {
 	}
 	
 	public boolean validate(Document taxiiDoc) throws SAXException, IOException {
+		logger.info("TaxiiValidator validating taxii...");
 		Source source = new DOMSource(taxiiDoc);
 		Validator validator = schema.newValidator();
 		TaxiiErrorHandler errorHandler = new TaxiiValidator.TaxiiErrorHandler();
@@ -40,13 +41,13 @@ public class TaxiiValidator {
 		List<SchemaError> errors = errorHandler.getErrors();
 		if (errors.size() > 0) {
 			for (SchemaError error : errors) {
-				logger.debug("SchemaError error getCategory: " + error.getCategory());
-				logger.debug("SchemaError error getMessage: " + error.getMessage());
+				logger.error("SchemaError error getCategory: " + error.getCategory());
+				logger.error("SchemaError error getMessage: " + error.getMessage());
 			}
 			logger.error("Message was not published due to TAXII validation errors!  Please check content and try again.");
 			return false;
 		} else {
-			logger.debug("validateTaxii result: No Errors");
+			logger.info("validateTaxii result: No Errors");
 			return true;
 		}
 	}

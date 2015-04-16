@@ -651,7 +651,7 @@ public class ClientUtil {
 					Document responseDoc = ClientUtil.convertStringToDocument(response);
 					Element element = responseDoc.getDocumentElement();
 					String status = element.getAttributes().getNamedItem("status_type").getNodeValue();
-					logger.debug("printHttpsResponse response status: " + status);
+					logger.info("printHttpsResponse response status: " + status);
 				} catch (Exception e) {
 					logger.error("printHttpsResponse Exception e: " + e.getMessage());		
 				}
@@ -722,16 +722,18 @@ public class ClientUtil {
 		InputStream is = null;
 		String response = "";
 		try {
+			logger.info("sendPost sending request...");
+			logger.trace(payload);
 			outputStream = conn.getOutputStream();
 			wr = new DataOutputStream(outputStream);
 		    wr.write(payload.getBytes("UTF-8"));
 			wr.flush();
 			is = conn.getInputStream();
 			response = IOUtils.toString(is, "UTF-8");
-			logger.debug("sendPost request: " + payload);
-			logger.debug("sendPost response: " + response);
+			logger.info("sendPost recvd response..." + response);
+			logger.trace(response);
 		} catch (IOException e) {
-			logger.error("sendRequest IOException e: " + e.getMessage());
+			logger.error("sendRequest IOException e: " + e.getMessage(),e);
 		} finally {
 			if (is != null) {
 				try {
@@ -771,7 +773,8 @@ public class ClientUtil {
      */
     public static boolean validateStix(Document taxiiDoc) {
     	try {
-    		logger.debug("validateStix doc == " + taxiiDoc);
+    		logger.debug("validateStix doc");
+    		logger.trace("validateStix doc == " + taxiiDoc);
     		NodeList blocks = taxiiDoc.getElementsByTagName("Content_Block");
     		int numBlocks = blocks.getLength();
     		logger.debug("validateStix numBlocks == " + numBlocks);
@@ -779,7 +782,7 @@ public class ClientUtil {
     			Node block = (Node) blocks.item(i); 
     			Node stixNode = block.getFirstChild().getNextSibling().getFirstChild();
     			String stixString = convertNodeToString(stixNode);
-    			logger.debug("validateStix stixString = \n" + stixString);
+    			logger.trace("validateStix stixString = \n" + stixString);
 	    		Source source = new DOMSource(stixNode);
 	    		Node contentBindingNode =  block.getFirstChild();
 	    		String stixVersion = getStixVersion(contentBindingNode);
@@ -788,10 +791,10 @@ public class ClientUtil {
 		    	    StixValidator sv = new StixValidator(stixVersion);
 			    	List<SchemaError> errors = sv.validate(source);
 					if (errors.size() > 0) {
-						logger.debug("errors.size() == " + errors.size());
+						logger.error("errors.size() == " + errors.size());
 						for (SchemaError error : errors) {
-							logger.debug("SchemaError error getCategory: " + error.getCategory());
-							logger.debug("SchemaError error getMessage: " + error.getMessage());
+							logger.error("SchemaError error getCategory: " + error.getCategory());
+							logger.error("SchemaError error getMessage: " + error.getMessage());
 						}
 						logger.error("Message was not published due to STIX " + stixVersion + " content validation errors!  Please check content and try again.");
 						return false;
@@ -800,7 +803,7 @@ public class ClientUtil {
 	    			throw new SAXException("Error: No STIX version number is specified by the Content_Binding urn.");
 	    		}
     		}
-    		logger.debug("All STIX has been validated successfully.");
+    		logger.info("All STIX has been validated successfully.");
     		return true;
 	    } catch (SAXException e) {
 	    	logger.error("SAXException e == " + e.getMessage());

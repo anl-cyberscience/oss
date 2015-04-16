@@ -75,10 +75,10 @@ public class PublisherOutbox11 {
         if (!initial) {
             Path prev = keys.get(key);
             if (prev == null) {
-                logger.debug("Register: " + dir);
+                logger.info("Register: " + dir);
             } else {
                 if (!dir.equals(prev)) {
-                	 logger.debug("Update: " + prev + " -> " + dir);
+                	 logger.info("Update: " + prev + " -> " + dir);
                 }
             }
         }
@@ -159,14 +159,14 @@ public class PublisherOutbox11 {
             for (WatchEvent<?> event: key.pollEvents()) {
                 @SuppressWarnings("rawtypes")
 				WatchEvent.Kind kind = event.kind();
-                logger.debug("processEvents dir.name(): " + kind.name());
+                logger.info("processEvents dir.name(): " + kind.name());
                 logger.debug("processEvents "+ event.context() + ", count: " + event.count() + ", event: " + event.kind());
                 logger.debug("processEvents only ENTRY_CREATE event is handled....");
                 if (kind.name().equalsIgnoreCase("ENTRY_CREATE")) {
 	                
                 	// overflow event - events may have been lost or discarded
 	                if (kind == StandardWatchEventKinds.OVERFLOW) {
-	                	logger.debug("Overflow! Some files may not have been published.  Check logs and resubmit those that failed.");
+	                	logger.warn("Overflow! Some files may not have been published.  Check logs and resubmit those that failed.");
 	                    continue;
 	                }            
 	      	   	   	 
@@ -221,7 +221,7 @@ public class PublisherOutbox11 {
      * prints usage for errant attempts to run main()
      */
     static void usage() {
-    	logger.debug("Usage: java PubDirectory [-r] dir");
+    	logger.error("Usage: java PubDirectory [-r] dir");
         System.exit(-1);
     }
 

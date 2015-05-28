@@ -722,16 +722,16 @@ public class ClientUtil {
 		InputStream is = null;
 		String response = "";
 		try {
-			logger.info("sendPost sending request...");
-			logger.trace(payload);
 			outputStream = conn.getOutputStream();
 			wr = new DataOutputStream(outputStream);
 		    wr.write(payload.getBytes("UTF-8"));
 			wr.flush();
 			is = conn.getInputStream();
 			response = IOUtils.toString(is, "UTF-8");
-			logger.info("sendPost recvd response..." + response);
-			logger.trace(response);
+			logger.info("sendPost sending request...");
+			logger.debug(payload);
+			logger.info("sendPost recvd response...");
+			logger.debug(response);
 		} catch (IOException e) {
 			logger.error("sendRequest IOException e: " + e.getMessage(),e);
 		} finally {

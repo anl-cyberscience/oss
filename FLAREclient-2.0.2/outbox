@@ -1,0 +1,71 @@
+#!/bin/bash
+
+FLARECLIENT_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+USAGE="Usage: outbox <1.0|1.1> [-r] DIRECTORY"
+
+# if not 2 or 3 args specified, show usage
+if [ $# -lt 2 ]; then
+    echo "$USAGE"
+    exit 1
+elif [ $# -gt 3 ]; then
+    echo "$USAGE"
+    exit 1
+else
+    VERSION=$1
+    shift
+    DIRECTORY=$1
+    shift
+    if [ "$DIRECTORY" = "-r" ]; then
+        RECURSIVE="-r"
+        DIRECTORY=$1
+    fi
+fi
+
+if [ ! -d "$DIRECTORY" ]; then
+    echo "$DIRECTORY is not a directory!"
+    exit 1
+fi
+
+# some Java parameters
+if [ "$JAVA_HOME" != "" ]; then
+    JAVA_HOME=$JAVA_HOME
+fi
+
+if [ "$JAVA_HOME" = "" ]; then
+    echo "Searching for JAVA ..."
+    OUTPUT="$(find / 2>/dev/null -name 'java')"
+    echo OUTPUT: $OUTPUT
+    for f in $OUTPUT
+    do
+	#echo "Processing $f"
+       if [[ $f == *bin/java ]]
+          then         
+          echo Java installed in $f
+          LEN=${#f}
+          #echo $LEN
+          DIFF=`expr $LEN - 9`
+          #echo $DIFF
+          JAVA_HOME=${f:0:DIFF}
+          echo using JAVA_HOME: $JAVA_HOME
+          export JAVA_HOME
+          break
+       fi
+    done
+fi
+
+JAVA=$JAVA_HOME/bin/java
+CLASSPATH="$FLARECLIENT_HOME:$FLARECLIENT_HOME/lib/flare-client-2.0.2.jar:$FLARECLIENT_HOME/lib/log4j-1.2.14.jar:$FLARECLIENT_HOME/lib/commons-io-2.4.jar:$FLARECLIENT_HOME/lib/commons-codec-1.9.jar:$FLARECLIENT_HOME/lib/STIX_Validator.jar:$FLARECLIENT_HOME/lib/xmlsec-2.0.2.jar:$FLARECLIENT_HOME/lib/slf4j-simple-1.6.99.jar:$FLARECLIENT_HOME/lib/slf4j-api-2.0.99.jar"
+if [ "$VERSION" = "1.0" ]; then
+    CLASS=com.bcmcgroup.flare.client.PublisherOutbox10
+elif [ "$VERSION" = "1.1" ]; then
+    CLASS=com.bcmcgroup.flare.client.PublisherOutbox11
+else
+    echo "Invalid TAXII version"
+    echo "$USAGE"
+fi
+
+if [ "$RECURSIVE" = "-r" ]; then
+    exec "$JAVA" -classpath "$CLASSPATH" $CLASS -r "$DIRECTORY"
+else
+    exec "$JAVA" -classpath "$CLASSPATH" $CLASS "$DIRECTORY"
+fi

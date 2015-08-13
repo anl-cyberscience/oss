@@ -99,7 +99,7 @@ public class Subscriber11 {
 		} catch (TransformerFactoryConfigurationError e) {
 			logger.error("fetchStixAndSave TransformerFactoryConfigurationError: " + e);
 		} catch (TransformerException e) {
-			logger.error("poll TransformerException: " + e.getMessage());
+			logger.error("poll TransformerException: ",e);
 		}
 	}
 

@@ -700,22 +700,22 @@ public class ClientUtil {
 		InputStream is = null;
 		String response = "";
 		try {
+			logger.debug("sendPost request: " + payload);
 			outputStream = conn.getOutputStream();
 			wr = new DataOutputStream(outputStream);
 		    wr.write(payload.getBytes("UTF-8"));
 			wr.flush();
 			is = conn.getInputStream();
 			response = IOUtils.toString(is, "UTF-8");
-			logger.debug("sendPost request: " + payload);
 			logger.debug("sendPost response: " + response);
 		} catch (IOException e) {
-			logger.error("sendRequest IOException e: " + e.getMessage());
+			logger.error("sendRequest IOException e: ",e);
 		} finally {
 			if (is != null) {
 				try {
 				   is.close();
 				} catch (IOException e) {
-					logger.error("sendRequest IOException is: " + e.getMessage());
+					logger.error("sendRequest IOException is: ",e);
 				}
 				is = null;
 			}
@@ -723,7 +723,7 @@ public class ClientUtil {
 				try {
 					outputStream.close();
 				} catch (IOException e) {
-					logger.error("sendRequest IOException outputStream: " + e.getMessage());
+					logger.error("sendRequest IOException outputStream: ",e);
 				}
 				outputStream = null;
 			}
@@ -731,7 +731,7 @@ public class ClientUtil {
 				try {
 					wr.close();
 				} catch (IOException e) {
-					logger.error("sendRequest IOException wr: " + e.getMessage());
+					logger.error("sendRequest IOException wr: ",e);
 				}
 				wr = null;
 			}
